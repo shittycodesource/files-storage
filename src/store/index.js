@@ -9,96 +9,99 @@ import { setDoc, updateDoc, doc as documentRef, getDoc, getDocs, collection, Tim
 
 
 export default new Vuex.Store({
-  state: {
-    files: [],
-    openedFile: false,
-  },
-  getters: {
-    getFiles: (state) => state.files,
-
-    openedFile: (state) => state.openedFile,
-  },
-  mutations: {
-    SET_FILES_TO_STORE(state, data) {
-      state.files = data;
+    state: {
+        files: [],
+        openedFile: false,
     },
+    getters: {
+        getFiles: (state) => state.files,
 
-    OPEN_FILE(state, file) {
-      state.openedFile = file;
+        openedFile: (state) => state.openedFile,
     },
+    mutations: {
+        SET_FILES_TO_STORE(state, data) {
+            state.files = data;
+        },
 
-    CLOSE_FILE(state) {
-      state.openedFile = false;
-    }
+        OPEN_FILE(state, file) {
+            state.openedFile = file;
+        },
+
+        CLOSE_FILE(state) {
+            state.openedFile = false;
+        }
 
 
-  },
-  actions: {
-    setFilesToStore({commit}, data) {
-      commit('SET_FILES_TO_STORE', data);
     },
+    actions: {
+        setFilesToStore({ commit }, data) {
+            commit('SET_FILES_TO_STORE', data);
+        },
 
-    clearStoreFiles({commit}) {
-      commit('SET_FILES_TO_STORE', []);
-    },
+        clearStoreFiles({ commit }) {
+            commit('SET_FILES_TO_STORE', []);
+        },
 
-    openFile({commit}, file) {
-      commit('OPEN_FILE', file)
-    },
+        openFile({ commit }, file) {
+            commit('OPEN_FILE', file)
+        },
 
-    closeFile({commit}) {
-      commit('CLOSE_FILE');
-    },
+        closeFile({ commit }) {
+            commit('CLOSE_FILE');
+        },
 
-    async fetchFiles() {
-      try {
+        async fetchFiles() {
+            try {
 
-          const obj = await getDoc(documentRef(db, 'docs', 'list'));
+                const q = query(collection(db, 'files'), orderBy('createdAt', 'asc'));
+                const snapshots = await getDocs(q);
+                const docs = [];
 
-          if (obj.exists()) {
-            return (obj.data()).files;
-          } else {
-            return [];
-          }
+                snapshots.forEach(item => {
+                    if (item.exists()) {
+                        docs.unshift(item.data());
+                    }
+                });
 
-      } catch(error) {
-        throw error;
-      }
-    },
+                return docs;
+            } catch (error) {
+                throw error;
+            }
+        },
 
-    async sendFiles({commit}, files) {
-      try {
-        commit('SET_FILES_TO_STORE', []);
+        async sendFiles({ commit }, files) {
+            try {
+                commit('SET_FILES_TO_STORE', []);
 
-            let downloadUrls = [];
-            let uploadPromises = [];
-            const refs = [];
-            if (files.length) {
-                for (let i = 0; i <= files.length - 1; i++) {
-                    const pathToImage = `${files[i].name}`
-                    refs.push(pathToImage);
+                let downloadUrls = [];
+                let uploadPromises = [];
+                const refs = [];
+                if (files.length) {
+                    for (let i = 0; i <= files.length - 1; i++) {
+                        const pathToImage = `${files[i].name}`
+                        refs.push(pathToImage);
 
-                    uploadPromises.push(uploadBytes(imageRef(storage, pathToImage), files[i]));
+                        uploadPromises.push(uploadBytes(imageRef(storage, pathToImage), files[i]));
+                    }
+
+                    const uploads = await Promise.all(uploadPromises);
+                    const downloadUrlsPromises = [];
+
+                    for (let i = 0; i <= uploads.length - 1; i++) { downloadUrlsPromises.push(getDownloadURL(imageRef(storage, refs[i]))); };
+
+                    downloadUrls = await Promise.all(downloadUrlsPromises);
                 }
 
-                const uploads = await Promise.all(uploadPromises);
-                const downloadUrlsPromises = [];
+                const result = [];
 
-                for (let i = 0; i <= uploads.length - 1; i++) { downloadUrlsPromises.push(getDownloadURL(imageRef(storage, refs[i]))); };
+                for (let i = 0; i <= files.length - 1; i++) {
+                    result.push({ name: files[i].name, url: downloadUrls[i] });
+                }
 
-                downloadUrls = await Promise.all(downloadUrlsPromises);
+                await setDoc(documentRef(db, 'docs', 'list'), { files: result });
+            } catch (error) {
+                throw error;
             }
-
-            const result = [];
-
-            for (let i = 0; i <= files.length - 1; i++) {
-              result.push({ name: files[i].name, url: downloadUrls[i] });
-            }
-
-            await setDoc(documentRef(db, 'docs', 'list'), { files: result });
-      } catch(error) {
-        throw error;
-      }
-    }
-  },
+        }
+    },
 })

@@ -25,7 +25,7 @@
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
-    name: "AboutView",
+    name: "Upload",
     components: { vDropOverlay },
     props: {
       isDragActive: {
@@ -57,25 +57,25 @@
 </script>
 
 <style lang="scss">
-  .fileslist {
-    margin-bottom: 35px;
-  }
+  // .fileslist {
+  //   margin-bottom: 35px;
+  // }
 
-  .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  // .loading-overlay {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
 
-    width: 100%;
-    height: 100vh;
+  //   width: 100%;
+  //   height: 100vh;
 
-    background: rgba(0, 0, 0, .5);
+  //   background: rgba(0, 0, 0, .5);
 
-    color: #fff;
+  //   color: #fff;
 
-    font-size: 45px;
-    font-weight: 700;
-  }
+  //   font-size: 45px;
+  //   font-weight: 700;
+  // }
 </style>

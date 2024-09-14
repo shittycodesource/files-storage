@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import TheSprites from './components/TheSprites.vue';
-import TheSidebar from './components/TheSidebar.vue';
+import TheSprites from './components/app/TheSprites.vue';
+import TheSidebar from './components/app/TheSidebar.vue';
 import vFileReader from './components/vFileReader.vue';
 
 import { mapActions } from 'vuex';

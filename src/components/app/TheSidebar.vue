@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import vNav from './vNav.vue';
+    import vNav from '../vNav.vue';
     import TheHelp from './TheHelp.vue';
 
     export default {

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import vIcon from './vIcon.vue';
+    import vIcon from '../vIcon.vue';
 
     export default {
         name: "TheHelp",
