@@ -1,6 +1,6 @@
 <template>
     <div class="separator">
-        <span>{{ time }}</span>
+        <span>{{ time | date(false, true) }}</span>
     </div>
 </template>
 

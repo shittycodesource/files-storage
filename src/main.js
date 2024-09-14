@@ -3,6 +3,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// Filters ----------------------------
+import dateFilter from './filters/date.filter'
+
+Vue.filter('date', dateFilter);
+// Filters ----------------------------
+
+
+
 import { auth } from './firebase/index.js';
 import { onAuthStateChanged } from "firebase/auth";
 

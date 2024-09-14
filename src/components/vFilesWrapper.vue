@@ -19,7 +19,7 @@
             </div>        
 
             <div class="files-wrapper__right">
-                {{ data.createdAt.toDate() }}
+                {{ data.createdAt.toDate() | date(false, true) }}
             </div>
         </header>
         <div class="files-wrapper__list">
