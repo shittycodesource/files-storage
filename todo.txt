@@ -1,0 +1,39 @@
+----------------------------------------------------------
+
+TODO:
+
+    Sidebar
+
+    Files Page
+
+    Dynamic Files Update
+
+    Drag & Drop Field 
+
+    Upload Page
+
+    Toasts
+
+    Fix download button
+
+    "My Files" Page
+
+    Login Page
+
+    Register
+
+    Auth
+
+    "Help" Button
+
+    Settings Page
+
+    Ru/En Locale
+
+    Dark Theme
+
+    Mobile Media Queries
+
+    Some Loading Animations
+
+----------------------------------------------------------
