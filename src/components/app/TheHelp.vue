@@ -1,7 +1,7 @@
 <template>
     <button class="help" type="button">
         <v-icon name="question circle" width="1.9rem" height="1.9rem"></v-icon>
-        <span>HELP</span>
+        <span>{{ 'Nav_Help' | localize }}</span>
     </button>
 </template>
 

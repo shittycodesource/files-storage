@@ -3,10 +3,10 @@
         <div class="container">
             <div class="settings__inner">
 
-                <div class="settings__title">SETTINGS</div>
+                <div class="settings__title">{{ 'Settings_Title' | localize }}</div>
 
                 <v-select 
-                    label="Language" 
+                    label="Settings_Language" 
                     :activeOption="selectedLanguage"
                     :options="[ { name: 'Русский' }, { name: 'English' } ]"
                     @select="option => { selectedLanguage = option; update() }"

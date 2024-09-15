@@ -1,6 +1,6 @@
 <template>
     <div class="later">
-        Later...
+        {{ 'Later' | localize }}...
     </div>
 </template>
 

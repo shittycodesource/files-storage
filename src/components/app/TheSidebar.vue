@@ -29,13 +29,13 @@
         data() {
             return {
                 upperLinks: [
-                    { name: "Files", path: "/", exact: true, icon: "folder", icon: { name: "upload", width: "2.1rem", height: "1.9rem" } },
-                    { name: "Upload", path: "/upload", exact: false, icon: { name: "upload", width: "2.3rem", height: "1.9rem" } },
-                    { name: "My Files", path: "/my", exact: false, icon: { name: "archive", width: "2.2rem", height: "1.9rem" } },
-                    { name: "Login", path: "/login", exact: false, icon: { name: "login", width: "2rem", height: "2rem" } },
+                    { name: "Nav_Files", path: "/", exact: true, icon: "folder", icon: { name: "upload", width: "2.1rem", height: "1.9rem" } },
+                    { name: "Nav_Upload", path: "/upload", exact: false, icon: { name: "upload", width: "2.3rem", height: "1.9rem" } },
+                    { name: "Nav_MyFiles", path: "/my", exact: false, icon: { name: "archive", width: "2.2rem", height: "1.9rem" } },
+                    { name: "Nav_Login", path: "/login", exact: false, icon: { name: "login", width: "2rem", height: "2rem" } },
                 ],
                 lowerLinks: [
-                    { name: "Settings", path: "/settings", exact: false, icon: { name: "settings", width: "2.4rem", height: "2rem" } },
+                    { name: "Nav_Settings", path: "/settings", exact: false, icon: { name: "settings", width: "2.4rem", height: "2rem" } },
                 ], 
             }
         }

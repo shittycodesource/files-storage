@@ -10,7 +10,7 @@ TODO:
 
     Dynamic Files Update
 
-    Transition Group for files page
+    +++++++++++++++++++++++++++++++++++++++++++Transition Group for files page
 
     +++++++++++++++++++++++++++++++++++++++++++Drag & Drop Field 
 
@@ -30,14 +30,16 @@ TODO:
 
     "Help" Button
 
-    Settings Page
+    +++++++++++++++++++++++++++++++++++++++++++Settings Page
 
-    Ru/En Locale
+    +++++++++++++++++++++++++++++++++++++++++++Ru/En Locale
 
     Dark Theme
 
     Mobile Media Queries
 
     +++++++++++++++++++++++++++++++++++++++++++Some Loading Animations
+
+    Correct Ending for words
 
 ----------------------------------------------------------

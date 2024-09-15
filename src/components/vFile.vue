@@ -2,8 +2,8 @@
     <div class="file">
         <div class="file__name">{{ file.name }}</div>
         <div class="file__action">
-            <v-button :isSmall="true" v-if="isRemoveable == false">DOWNLOAD</v-button>
-            <v-button :isSmall="false" :isRed="true" v-if="isRemoveable" @click.native="$emit('remove')">REMOVE</v-button>
+            <v-button :isSmall="true" v-if="isRemoveable == false">{{ 'Files_Download' | localize }}</v-button>
+            <v-button :isSmall="false" :isRed="true" v-if="isRemoveable" @click.native="$emit('remove')">{{ 'Files_Remove' | localize }}</v-button>
         </div>
     </div>
 </template>

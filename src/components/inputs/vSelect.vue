@@ -1,6 +1,6 @@
 <template>
     <v-input-block ref="select" @click.native="isOpen = !isOpen" :isFocused="isFocused || isOpen">
-        <template #label>{{ label }}</template>
+        <template #label>{{ label | localize }}</template>
 
         <button class="select-trigger" :class="{ 'open': isOpen }" type="button" @click.stop="isOpen = !isOpen" @focus="isFocused = true" @blur="isFocused = false">
             <span @click="isOpen = !isOpen">

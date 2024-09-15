@@ -3,13 +3,12 @@
         <div class="loading-overlay" >
     
             <div class="requests-loader">
-                <div class="requests-loader__letter" style="--time: 0.15s">L</div>
-                <div class="requests-loader__letter" style="--time: 0.20s">o</div>
-                <div class="requests-loader__letter" style="--time: 0.25s">a</div>
-                <div class="requests-loader__letter" style="--time: 0.30s">d</div>
-                <div class="requests-loader__letter" style="--time: 0.35s">i</div>
-                <div class="requests-loader__letter" style="--time: 0.40s">n</div>
-                <div class="requests-loader__letter" style="--time: 0.45s">g</div>
+                <div 
+                    class="requests-loader__letter" 
+                    v-for="(letter, index) in word"
+                    :style="`--time: 0.10s + calc(0.05s * ${index})`"
+                    :key="index"
+                >{{ letter }}</div> 
     
                 <div class="requests-loader__dots">
                     <div class="requests-loader__dot" style="--time: 0.50s">.</div>
@@ -23,8 +22,16 @@
 </template>
 
 <script>
+    import localizeFilter from '@/filters/localize.filter';
+
     export default {
         name: "vLoadingOverlay",
+        filters: { localizeFilter },
+        computed: {
+            word() {
+                return localizeFilter('Loading', false);
+            }
+        },
         props: {
             isVisible: { type: Boolean, default: false },
         },

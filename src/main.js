@@ -1,12 +1,14 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
 // Filters ----------------------------
-import dateFilter from './filters/date.filter'
+import dateFilter from './filters/date.filter';
+import localizeFilter from './filters/localize.filter.js';
 
 Vue.filter('date', dateFilter);
+Vue.filter('localize', localizeFilter)
 // Filters ----------------------------
 
 

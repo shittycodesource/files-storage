@@ -5,7 +5,9 @@
                 {{ getSize }}
             </div>
             <div class="storage-space__text"  :class="{ 'show': getStorageSize != 0 }">
-                used from 5GB
+                {{ 'Space_UsedFrom' | localize }}
+                5
+                {{ 'Space_GB' | localize }}
             </div>
         </header>
         <div class="storage-space__bar" :class="{ 'show': getStorageSize != 0 }">

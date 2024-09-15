@@ -3,11 +3,11 @@
         <div class="container">
             <div class="upload__inner">
 
-                <div class="upload__title">DROP FILES HERE</div>
+                <div class="upload__title">{{ 'Files_DropHere' | localize }}</div>
 
                 <v-drop-place @setFiles="value => files = value" :files="files"></v-drop-place>
 
-                <div class="upload__subtitle" v-if="files.length">FILES TO UPLOAD</div>
+                <div class="upload__subtitle" v-if="files.length">{{ 'Files_FilesToUpload' | localize }}</div>
                 
                 <v-files-wrapper v-if="files.length"
                     :header="false" 
@@ -22,7 +22,7 @@
 
                 <v-button v-if="files.length" @click.native="send">
                     <v-icon name="send" width="2rem" height="2rem"></v-icon>
-                    UPLOAD
+                    {{ 'Files_Upload' | localize }}
                 </v-button>
             </div>
         </div>
@@ -83,13 +83,17 @@ export default {
             font-weight: 800;
             font-size: 3.5rem;
             color: #5B93FF;
+
+            text-transform: uppercase;
         }
 
         &__subtitle {
-            margin: 1.5rem auto -2rem;
+            margin: 3.5rem auto -2rem;
 
             color: #737373;
             font-size: 3.5rem;
+
+            text-transform: uppercase;
         }
     }
 </style>

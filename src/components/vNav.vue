@@ -10,7 +10,7 @@
             active-class="active"
         >
             <v-icon :name="link.icon.name" :width="link.icon.width" :height="link.icon.height"></v-icon>
-            <span>{{ link.name }}</span>
+            <span>{{ link.name | localize }}</span>
         </router-link>
     </nav>
 </template>

@@ -9,14 +9,21 @@
             <div class="files-wrapper__left">
                 <div class="files-wrapper__name">
                     <template v-if="data.isAnonymous">
-                        Anonymous User
+                        {{ 'Files_Anonymous' | localize }}
                     </template>
                     <template v-else>
                         {{ data.userData.name }}
                     </template>
                 </div>
-                <div class="files-wrapper__text">uploaded {{ data.files.length }} files</div>
+                <div class="files-wrapper__text">
+                    {{ 'Files_Uploaded' | localize }} 
+                    {{ data.files.length }} 
+                    {{ data.files.length == 1 ? 'Files_File' : 'Files_Files' | localize }}</div>
             </div>        
+
+        <!-- файлов: 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 25 26 27 28 29 30  -->
+        <!-- файла: 22 23 24  -->
+        <!-- файл: 0 21 31 -->
 
             <div class="files-wrapper__right">
                 {{ data.createdAt.toDate() | date(false, true) }}
