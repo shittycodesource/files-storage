@@ -6,32 +6,37 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/upload',
-    name: 'upload',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Upload.vue')
-  },
-  {
-    path: '/my',
-    name: 'My Files',
-    component: () => import(/* webpackChunkName: "about" */ '../views/MyFiles.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
-  }
+    {
+        path: '/',
+        name: 'home',
+        component: Home
+    },
+    {
+        path: '/upload',
+        name: 'upload',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Upload.vue')
+    },
+    {
+        path: '/my',
+        name: 'My Files',
+        component: () => import(/* webpackChunkName: "about" */ '../views/MyFiles.vue')
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Settings.vue')
+    }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router

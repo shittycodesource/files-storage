@@ -10,6 +10,14 @@ Vue.filter('date', dateFilter);
 // Filters ----------------------------
 
 
+// Directives ----------------------------
+import clickOutsideDirective from './directives/clickOutside.directive';
+
+Vue.directive('click-outside', clickOutsideDirective);
+// Directives ----------------------------
+
+
+
 
 import { auth } from './firebase/index.js';
 import { onAuthStateChanged } from "firebase/auth";

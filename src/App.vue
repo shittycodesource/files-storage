@@ -20,9 +20,11 @@ export default {
     name: "App",
     components: { TheSprites, TheSidebar },
     methods: {
-        ...mapActions(['setFilesToStore', 'fetchStorageSize']),
+        ...mapActions(['loadSettings', 'fetchStorageSize']),
         async onCreate() {
             try {
+                this.loadSettings();
+
                 const size = await this.fetchStorageSize();
 
                 console.log('App.vue: fetched size', size);
