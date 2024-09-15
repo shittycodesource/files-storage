@@ -1,10 +1,10 @@
 <template>
     <div class="files-wrapper">
-        <div class="files-wrapper__warning" v-if="data.isAnonymous">
+        <div class="files-wrapper__warning" v-if="data.isAnonymous && header">
             NOT VERIFIED USER
         </div>
 
-        <header class="files-wrapper__header">
+        <header class="files-wrapper__header" v-if="header">
 
             <div class="files-wrapper__left">
                 <div class="files-wrapper__name">
@@ -26,7 +26,10 @@
             <v-file 
                 v-for="(file, index) in data.files"
                 :file="file"
+                :isRemoveable="isRemoveable"
                 :key="index"
+
+                @remove="$emit('remove', file)"
             ></v-file>
         </div>
     </div>
@@ -39,6 +42,14 @@
         name: "vFilesWrapper",
         components: { vFile },
         props: {
+            header: {
+                type: Boolean,
+                default: true,
+            },
+            isRemoveable: {
+                type: Boolean,
+                default: false,
+            },
             data: {
                 type: Object,
                 default() {
@@ -57,6 +68,7 @@
 <style lang="scss">
     .files-wrapper {
         max-width: 78rem;
+        width: 100%;
         margin: 3rem auto;
         
         display: flex;
@@ -111,6 +123,10 @@
             top: -2rem;
             left: -1rem;
 
+        }
+
+        &__list {
+            width: 100%;
         }
     }
 </style>

@@ -2,7 +2,8 @@
     <div class="file">
         <div class="file__name">{{ file.name }}</div>
         <div class="file__action">
-            <v-button :isSmall="true">DOWNLOAD</v-button>
+            <v-button :isSmall="true" v-if="isRemoveable == false">DOWNLOAD</v-button>
+            <v-button :isSmall="false" :isRed="true" v-if="isRemoveable" @click.native="$emit('remove')">REMOVE</v-button>
         </div>
     </div>
 </template>
@@ -15,8 +16,12 @@
         components: { vButton },
         props: {
             file: {
-                type: Object,
+                type: [Object, File],
                 default: () => {}
+            },
+            isRemoveable: {
+                type: Boolean,
+                default: false
             }
         }
     }
@@ -29,6 +34,8 @@
         justify-content: space-between;
 
         padding: 1.2rem 1.6rem;
+
+        border-bottom: 1px solid #E7E7E7;
 
         &__name {
             font-size: 1.6rem;

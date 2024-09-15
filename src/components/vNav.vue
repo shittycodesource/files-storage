@@ -7,6 +7,7 @@
             :exact="link.exact"
 
             class="nav__link"
+            active-class="active"
         >
             <v-icon :name="link.icon.name" :width="link.icon.width" :height="link.icon.height"></v-icon>
             <span>{{ link.name }}</span>
@@ -74,7 +75,10 @@
                 border-color: #E8E8E8;
                 background: #F1F1F1;
                 color: #5B93FF;
-                fill: #5B93FF;
+                
+                svg {
+                    fill: #5B93FF;
+                }
             }
         }
     }

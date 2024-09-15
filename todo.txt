@@ -2,11 +2,15 @@
 
 TODO:
 
-    Sidebar
+    + Sidebar
 
     Files Page
 
+    Count size of files during upload and store it in database
+
     Dynamic Files Update
+
+    Transition Group for files page
 
     Drag & Drop Field 
 

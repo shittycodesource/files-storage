@@ -2,7 +2,7 @@
     <div class="storage-space">
         <header class="storage-space__header">
             <div class="storage-space__used">
-                17 MB
+                {{ getSize }}
             </div>
             <div class="storage-space__text">
                 used from 5GB
@@ -15,11 +15,18 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+    import formatBytes from '../utils/formatBytes.js';
+
     export default {
         name: "vStorageSpace",
         computed: {
+            ...mapGetters(['getStorageSize']),
             getWidth() {
-                return '40%';
+                return `${this.getStorageSize / 5368709120 * 100}%`;
+            },
+            getSize() {
+                return formatBytes(this.getStorageSize, 0);
             }
         }
     }

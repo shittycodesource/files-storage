@@ -21,7 +21,7 @@
         justify-content: center;
         gap: .5rem;
 
-        padding: 1rem 2rem;
+        padding: 1rem 2.4rem;
 
         background: #5B93FF;
         border: 1px solid #88B0FF;
@@ -37,7 +37,9 @@
         text-transform: uppercase;
 
         &--red {
-
+            border-color: #CA3774;
+            background: #EC4E87;
+            color: #AA0048;
         }
 
         &--small {

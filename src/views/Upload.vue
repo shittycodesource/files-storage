@@ -1,81 +1,84 @@
 <template>
-  <div class="about">
-    <h1>DROP FILES HERE </h1>
+    <div class="upload">
+        <div class="container">
+            <div class="upload__inner">
 
-    <button class="file__button" @click="$emit('openReader')">Or select them</button>
+                <div class="upload__title">DROP FILES HERE</div>
 
-    <div v-if="getFiles.length" class="fileslist">
-      <h2>FILES TO UPLOAD:</h2>
-      <div v-for="(file, index) in getFiles" :key="index">
-        {{ file.name }}
-      </div>
+                <v-drop-place @setFiles="value => files = value" :files="files"></v-drop-place>
+
+                <v-files-wrapper v-if="files.length"
+                    :header="false" 
+                    :isRemoveable="true"
+
+                    :data="{ files: files }"
+
+                    @remove="file => files.splice(files.indexOf(file), 1)"
+                ></v-files-wrapper>
+
+                <v-loading-overlay :isVisible="isRequestActive"></v-loading-overlay>
+
+                <v-button v-if="files.length" @click.native="send">
+                    <v-icon name="send" width="2rem" height="2rem"></v-icon>
+                    UPLOAD
+                </v-button>
+            </div>
+        </div>
     </div>
-
-    <button class="file__button" v-if="getFiles.length" @click="send">UPLOAD (CURRENT UPLOADS WILL BE DELETED)</button>
-
-    <div class="loading-overlay" v-if="isRequestActive">SENDING...</div>
-
-    <v-drop-overlay :isDragActive="isDragActive" v-if="isDragActive"></v-drop-overlay>
-  </div>
 </template>
 
 <script>
-  import vDropOverlay from '../components/vDropOverlay.vue';
+import vDropPlace from '../components/vDropPlace.vue';
+import vFilesWrapper from '../components/vFilesWrapper.vue';
+import vButton from '../components/vButton.vue';
+import vIcon from '../components/vIcon.vue';
+import vLoadingOverlay from '../components/vLoadingOverlay.vue';
 
-  import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
-  export default {
+export default {
     name: "Upload",
-    components: { vDropOverlay },
-    props: {
-      isDragActive: {
-        type: Boolean,
-        default: false
-      }
-    },
+    components: { vDropPlace, vFilesWrapper, vButton, vIcon, vLoadingOverlay },
     data() {
-      return {
-        isRequestActive: false,
-      }
-    },
-    computed: {
-      ...mapGetters(['getFiles'])
+        return {
+            files: [],
+            isRequestActive: false,
+        }
     },
     methods: {
-      ...mapActions(['sendFiles']),
-      async send() {
-        try {
-          this.isRequestActive = true;
-          await this.sendFiles(this.getFiles);
-          this.isRequestActive = false;
-        } catch(error) {
-          throw error;
+        ...mapActions(['sendFiles']),
+        async send() {
+            try {
+                this.isRequestActive = true;
+                
+                await this.sendFiles(this.files);
+
+                this.files = [];
+
+                this.isRequestActive = false;
+            } catch (error) {
+                throw error;
+            }
         }
-      }
     }
-  }
+}
 </script>
 
 <style lang="scss">
-  // .fileslist {
-  //   margin-bottom: 35px;
-  // }
+    .upload {
+        &__inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
 
-  // .loading-overlay {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   bottom: 0;
+        &__title {
+            margin: 3.2rem auto;
 
-  //   width: 100%;
-  //   height: 100vh;
-
-  //   background: rgba(0, 0, 0, .5);
-
-  //   color: #fff;
-
-  //   font-size: 45px;
-  //   font-weight: 700;
-  // }
+            font-weight: 800;
+            font-size: 3.5rem;
+            color: #5B93FF;
+        }
+    }
 </style>

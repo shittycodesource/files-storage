@@ -10,7 +10,7 @@
         name: "vSeparator", 
         props: {
             time: {
-                type: Number
+                type: Date
             }
         }
     }

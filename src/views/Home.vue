@@ -1,44 +1,45 @@
 <template>
     <div class="home">
+        <div class="container">
 
-        <v-storage-space></v-storage-space>
+            <v-storage-space></v-storage-space>
 
-        
-        <template v-for="(data, index) in files">
-            <template 
-                v-if="index == 0 || 
-                    new Date(data.createdAt.toDate()).getDay() != new Date(files[index - 1].createdAt.toDate()).getDay() || 
-                    new Date(data.createdAt.toDate()).getMonth() != new Date(files[index - 1].createdAt.toDate()).getMonth()
-                ">
-                <v-separator :time="data.createdAt.toDate()" :key="data.id"></v-separator>
+            
+            <template v-for="(data, index) in files">
+                <template 
+                    v-if="index == 0 || 
+                        new Date(data.createdAt.toDate()).getDay() != new Date(files[index - 1].createdAt.toDate()).getDay() || 
+                        new Date(data.createdAt.toDate()).getMonth() != new Date(files[index - 1].createdAt.toDate()).getMonth()
+                    ">
+                    <v-separator :time="data.createdAt.toDate()" :key="data.id"></v-separator>
+                </template>
+
+                <v-files-wrapper 
+                    :data="data"
+                    :key="index"
+                ></v-files-wrapper>
+
             </template>
 
-            <v-files-wrapper 
-                :data="data"
-                :key="index"
-            ></v-files-wrapper>
+            <!-- <div class="file">
+                <div class="file__name">
+                    Documents
 
-        </template>
+                    <ul>
+                        <li v-for="file in files">
+                            {{ file.name }}
+                            <a :href="file.url" :download="file.name"><button class="file__button">Download</button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-        <!-- <div class="file">
-            <div class="file__name">
-                Documents
-
-                <ul>
-                    <li v-for="file in files">
-                        {{ file.name }}
-                        <a :href="file.url" :download="file.name"><button class="file__button">Download</button>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <span v-if="files.length == 0 && isLoaded">Reload the page if you don't see files</span>
+                <span v-if="files.length == 0 && isLoaded">Reload the page if you don't see files</span>
 
 
-        </div> -->
+            </div> -->
 
-
+        </div>
     </div>
 </template>
 

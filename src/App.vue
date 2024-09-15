@@ -1,110 +1,78 @@
 <template>
-    <div id="app" 
-        @drop.prevent="drop" 
-        @dragstart.prevent 
-        @dragenter.prevent="dragEnter" 
-        @dragover.prevent
-        @dragleave.prevent.self="dragLeave" 
-        @dragend.prevent
-        
-    >
+    <div id="app">
         <the-sprites></the-sprites>
         <the-sidebar></the-sidebar>
 
         <main class="main">
-            <router-view :isDragActive="isDragActive" @openReader="openReader" />
+            <router-view></router-view>
         </main>
-
-
-        <v-file-reader ref="input" @emitFiles="setFiles" :filesArray="files"></v-file-reader>
     </div>
 </template>
 
 <script>
 import TheSprites from './components/app/TheSprites.vue';
 import TheSidebar from './components/app/TheSidebar.vue';
-import vFileReader from './components/vFileReader.vue';
 
+import formatBytes from './utils/formatBytes';
 import { mapActions } from 'vuex';
 
 export default {
     name: "App",
-    components: { TheSprites, vFileReader, TheSidebar },
-    data() {
-        return {
-            isDragActive: false,
-            files: [],
+    components: { TheSprites, TheSidebar },
+    methods: {
+        ...mapActions(['setFilesToStore', 'fetchStorageSize']),
+        async onCreate() {
+            try {
+                const size = await this.fetchStorageSize();
+
+                console.log('App.vue: fetched size', size);
+                console.log('App.vue: fetched size', formatBytes(size));
+            } catch(error) {
+                throw error;
+            }
         }
     },
-    methods: {
-        ...mapActions(['setFilesToStore']),
-        dragEnter(event) {
-            console.log('drag enter')
-            if (this.$route.name == 'upload') {
-                this.isDragActive = true;
-            }
-        },
-        dragLeave(event) {
-            if (this.$route.name == 'upload') {
-                this.isDragActive = false;
-            }
-        },
-        drop(event) {
-            if (this.$route.name == 'upload') {
-                this.$refs.input.onChange(event);
-                this.isDragActive = false;
-            }
-        },
-        openReader() {
-            console.log(this.$refs.input)
-            console.log(this.$refs.input.$el)
-            this.$refs.input.$el.click();
-        },
-
-        setFiles(value) {
-            if (this.$route.name == 'upload') {
-                this.files = value;
-                this.setFilesToStore(value);
-            }
-        },
-
-        removeFile(file) {
-            this.files.splice(this.files.indexOf(file), 1);
-            this.setFilesToStore(this.files);
-        }
+    created() {
+        this.onCreate();        
     }
 }
 </script>
 
 <style lang="scss">
-html {
-    font-size: 62.5%;
-}
+    html {
+        font-size: 62.5%;
+    }
 
-body {
-    margin: 0;
-    padding: 0;
+    body {
+        margin: 0;
+        padding: 0;
 
-    font-family: 'Raleway', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 1.6rem;
+        font-family: 'Raleway', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 1.6rem;
 
-    color: #000;
-    background: #fff;
-}
+        color: #000;
+        background: #fff;
+    }
 
-#app {
-    height: 100vh;
-}
+    #app {
+        height: 100vh;
+    }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
 
-.main {
-    padding-left: 23rem;
-}
+    .main {
+        padding-left: 23rem;
+    }
+
+    .container {
+        max-width: 108rem;
+        margin: 0 auto;
+        padding: 0 1.5rem
+    }
 </style>
