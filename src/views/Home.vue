@@ -5,39 +5,23 @@
             <v-storage-space></v-storage-space>
 
             
-            <template v-for="(data, index) in files">
-                <template 
-                    v-if="index == 0 || 
-                        new Date(data.createdAt.toDate()).getDay() != new Date(files[index - 1].createdAt.toDate()).getDay() || 
-                        new Date(data.createdAt.toDate()).getMonth() != new Date(files[index - 1].createdAt.toDate()).getMonth()
-                    ">
-                    <v-separator :time="data.createdAt.toDate()" :key="data.id"></v-separator>
+            <transition-group tag="div" name="list" class="list" v-if="isLoaded" appear>
+                <template v-for="(data, index) in files">
+                    <template 
+                        v-if="index == 0 || 
+                            new Date(data.createdAt.toDate()).getDay() != new Date(files[index - 1].createdAt.toDate()).getDay() || 
+                            new Date(data.createdAt.toDate()).getMonth() != new Date(files[index - 1].createdAt.toDate()).getMonth()
+                        ">
+                        <v-separator :style="`transition-delay: ${(index + .5) / 6}s`" :time="data.createdAt.toDate()" :key="data.id"></v-separator>
+                    </template>
+
+                    <v-files-wrapper 
+                        :style="`transition-delay: ${index / 6}s`"
+                        :data="data"
+                        :key="index"
+                    ></v-files-wrapper>
                 </template>
-
-                <v-files-wrapper 
-                    :data="data"
-                    :key="index"
-                ></v-files-wrapper>
-
-            </template>
-
-            <!-- <div class="file">
-                <div class="file__name">
-                    Documents
-
-                    <ul>
-                        <li v-for="file in files">
-                            {{ file.name }}
-                            <a :href="file.url" :download="file.name"><button class="file__button">Download</button>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <span v-if="files.length == 0 && isLoaded">Reload the page if you don't see files</span>
-
-
-            </div> -->
+            </transition-group>
 
         </div>
     </div>
@@ -78,6 +62,35 @@ export default {
 </script>
 
 <style lang="scss">
+    .list { 
+        &-enter {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        &-enter-to {
+            opacity: 1;
+            transform: translateX(0px);
+        }
+
+        &-enter-active {
+            transition: all 0.5s ease;
+        }
+
+        &-leave {
+            opacity: 1;
+            transform: translateX(0px);
+        }
+
+        &-leave-to {
+            opacity: 0;
+        }
+
+        &-leave-active {
+            transition-delay: 0s !important;
+        }
+    }
+
 // .file__name {
 //     font-weight: 700;
 //     font-size: 45px;

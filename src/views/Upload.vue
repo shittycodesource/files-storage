@@ -7,6 +7,8 @@
 
                 <v-drop-place @setFiles="value => files = value" :files="files"></v-drop-place>
 
+                <div class="upload__subtitle" v-if="files.length">FILES TO UPLOAD</div>
+                
                 <v-files-wrapper v-if="files.length"
                     :header="false" 
                     :isRemoveable="true"
@@ -55,6 +57,8 @@ export default {
 
                 this.files = [];
 
+                this.$router.push('/');
+
                 this.isRequestActive = false;
             } catch (error) {
                 throw error;
@@ -79,6 +83,13 @@ export default {
             font-weight: 800;
             font-size: 3.5rem;
             color: #5B93FF;
+        }
+
+        &__subtitle {
+            margin: 1.5rem auto -2rem;
+
+            color: #737373;
+            font-size: 3.5rem;
         }
     }
 </style>

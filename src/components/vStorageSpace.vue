@@ -1,14 +1,14 @@
 <template>
     <div class="storage-space">
         <header class="storage-space__header">
-            <div class="storage-space__used">
+            <div class="storage-space__used" :class="{ 'show': getStorageSize != 0 }">
                 {{ getSize }}
             </div>
-            <div class="storage-space__text">
+            <div class="storage-space__text"  :class="{ 'show': getStorageSize != 0 }">
                 used from 5GB
             </div>
         </header>
-        <div class="storage-space__bar">
+        <div class="storage-space__bar" :class="{ 'show': getStorageSize != 0 }">
             <div class="storage-space__filled" :style="{ 'width': getWidth }"></div>
         </div>
     </div>
@@ -20,6 +20,11 @@
 
     export default {
         name: "vStorageSpace",
+        data() {
+            return {
+                isMounted: false
+            }
+        },
         computed: {
             ...mapGetters(['getStorageSize']),
             getWidth() {
@@ -28,6 +33,9 @@
             getSize() {
                 return formatBytes(this.getStorageSize, 0);
             }
+        },
+        mounted() {
+            this.isMounted = true;
         }
     }
 </script>
@@ -53,6 +61,16 @@
 
 
             line-height: .5;
+
+            opacity: 0;
+            transform: translateY(.5rem);
+
+            transition: all .5s;
+
+            &.show {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
         &__text {
@@ -60,17 +78,36 @@
             color: #767676;
             
             line-height: .5;
+
+            opacity: 0;
+            transform: translateY(-.5rem);
+
+            transition: all .65s;
+
+            &.show {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         &__bar {
             border-radius: .6rem;
             background: #ECECEC;
 
-            width: 100%;
+            width: 0%;
             height: .8rem;
 
             position: relative;
             overflow: hidden;
+            
+            transition: all .45s ease;
+
+            opacity: 0;
+
+            &.show {
+                opacity: 1;
+                width: 100%;
+            }
         }
 
         &__filled {
@@ -82,6 +119,8 @@
             height: 100%;
 
             background: #5B93FF;
+
+            transition: width .25s ease;
         }
     }
 </style>

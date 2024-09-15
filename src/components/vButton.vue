@@ -36,6 +36,10 @@
         color: #fff;
         text-transform: uppercase;
 
+        svg {
+            fill: #fff;
+        }
+
         &--red {
             border-color: #CA3774;
             background: #EC4E87;

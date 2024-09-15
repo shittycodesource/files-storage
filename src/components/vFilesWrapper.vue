@@ -1,8 +1,8 @@
 <template>
     <div class="files-wrapper">
-        <div class="files-wrapper__warning" v-if="data.isAnonymous && header">
+        <!-- <div class="files-wrapper__warning" v-if="data.isAnonymous && header">
             NOT VERIFIED USER
-        </div>
+        </div> -->
 
         <header class="files-wrapper__header" v-if="header">
 
