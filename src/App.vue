@@ -20,10 +20,11 @@ export default {
     name: "App",
     components: { TheSprites, TheSidebar },
     methods: {
-        ...mapActions(['loadSettings', 'fetchStorageSize']),
+        ...mapActions(['loadSettings', 'fetchStorageSize', 'fetchFiles']),
         async onCreate() {
             try {
                 this.loadSettings();
+                this.fetchFiles();
 
                 const size = await this.fetchStorageSize();
 

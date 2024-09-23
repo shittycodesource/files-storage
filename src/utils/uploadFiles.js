@@ -38,7 +38,7 @@ export default async function uploadFiles(files, folder = '') {
             const urls = await Promise.all(toDownload);
 
             return { urls, refs, sizes };
-    } catch {
+    } catch(error) {
         console.log('[uploadFiles() Error]');
         throw error;
     }

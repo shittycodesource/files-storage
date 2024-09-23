@@ -5,12 +5,12 @@
             <v-storage-space></v-storage-space>
 
             
-            <transition-group tag="div" name="list" class="list" v-if="isLoaded" appear>
-                <template v-for="(data, index) in files">
+            <transition-group tag="div" name="list" class="list" v-if="getFiles.length" appear>
+                <template v-for="(data, index) in getFiles">
                     <template 
                         v-if="index == 0 || 
-                            new Date(data.createdAt.toDate()).getDay() != new Date(files[index - 1].createdAt.toDate()).getDay() || 
-                            new Date(data.createdAt.toDate()).getMonth() != new Date(files[index - 1].createdAt.toDate()).getMonth()
+                            new Date(data.createdAt.toDate()).getDay() != new Date(getFiles[index - 1].createdAt.toDate()).getDay() || 
+                            new Date(data.createdAt.toDate()).getMonth() != new Date(getFiles[index - 1].createdAt.toDate()).getMonth()
                         ">
                         <v-separator :style="`transition-delay: ${(index + .5) / 6}s`" :time="data.createdAt.toDate()" :key="data.id"></v-separator>
                     </template>
@@ -23,6 +23,12 @@
                 </template>
             </transition-group>
 
+
+            <div class="home__new" v-if="getFileOverlayState">
+                <button type="button" class="home__close" @click="closeOverlay">
+                    <v-icon name="remove" width="45px" height="45px"></v-icon>
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -31,12 +37,14 @@
 import vStorageSpace from '../components/vStorageSpace.vue';
 import vFilesWrapper from '../components/vFilesWrapper.vue';
 
+
+import vIcon from '../components/vIcon.vue';
 import vSeparator from '../components/vSeparator.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name: 'Home',
-    components: { vStorageSpace, vFilesWrapper, vSeparator },
+    components: { vStorageSpace, vFilesWrapper, vIcon, vSeparator },
     data() {
         return {
             files: [],
@@ -44,24 +52,78 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchFiles'])
-    },
-    async created() {
-        try {
-            this.isLoaded = false;
-            const files = await this.fetchFiles();
-
-            this.files = files;
-
-            this.isLoaded = true;
-        } catch (error) {
-            throw error;
+        ...mapActions(['fetchFiles', 'hideFileOverlay']),
+        closeOverlay() {
+            this.hideFileOverlay();
         }
-    }
+    },
+    computed: {
+        ...mapGetters(['getFiles', 'getFileOverlayState']),
+        isNewInList() {
+            let bool = false;
+
+            this.getFiles.forEach(item => item.isNew == true ? bool = true : '');
+
+            return bool;
+        }
+    },
+    // async created() {
+    //     try {
+    //         this.isLoaded = false;
+    //         const files = await this.fetchFiles();
+
+    //         this.files = files;
+
+    //         this.isLoaded = true;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
 }
 </script>
 
 <style lang="scss">
+    .home {
+        &__new {
+            &::before {
+                content: "";
+
+                width: 100%;
+                height: 100%;
+                
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+
+                background: rgba(0, 0, 0, .5);
+                z-index: 999;
+            }
+        }
+
+        &__close {
+            position: fixed;
+
+            top: 2.5rem;
+            right: 2.5rem;
+
+            width: 7rem;
+            height: 7rem;
+
+            border-radius: 500rem;
+            background: #5B93FF;
+            border: 1px solid #88B0FF;
+            cursor: pointer;
+
+            svg {
+                fill: #fff;
+            }
+
+            z-index: 1000;
+        }
+    }
+
     .list { 
         &-enter {
             opacity: 0;

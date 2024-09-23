@@ -1,5 +1,9 @@
 export default {
 
-    // NOTHING YET
+    getFiles: (state) => state.files,
+
+    isInitDone: (state) => state.isInitFetchDone,
+
+    getFileOverlayState: (state) => state.isFileOverlayOpen,
 
 }

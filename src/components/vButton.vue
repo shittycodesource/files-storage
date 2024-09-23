@@ -35,6 +35,7 @@
         font-weight: 700;
         color: #fff;
         text-transform: uppercase;
+        text-decoration: none;
 
         svg {
             fill: #fff;

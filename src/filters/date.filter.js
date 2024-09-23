@@ -11,7 +11,7 @@ const locales = {
 
 /**
  * @param {Date} date - 
- * @param {Boolean} onlyTime - **'H:mm'** Format if true. **'d MMMM H:mm'** if false.
+ * @param {Boolean} onlyTime - 'H:mm' Format if true. 'd MMMM H:mm' if false.
  * @param {Boolean} usingWords - Returns in "Today", "Yesterday" format
 */
 export default function dateFilter(date, onlyTime = false, usingWords = false) {

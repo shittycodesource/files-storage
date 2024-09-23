@@ -3,11 +3,11 @@
         <template #label>{{ label | localize }}</template>
 
         <button class="select-trigger" :class="{ 'open': isOpen }" type="button" @click.stop="isOpen = !isOpen" @focus="isFocused = true" @blur="isFocused = false">
-            <span @click="isOpen = !isOpen">
+            <span>
                 <template v-if="!activeOption.name">{{ options[0].name }}</template>
                 <template v-else>{{ activeOption.name }}</template>
             </span>
-            <v-icon name="down" width="2rem" height="2rem" @click="isOpen = !isOpen"/>
+            <v-icon name="down" width="2rem" height="2rem"/>
         </button>
 
         <template #outside>

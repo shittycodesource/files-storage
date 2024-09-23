@@ -1,8 +1,12 @@
 <template>
-    <div class="files-wrapper">
+    <div class="files-wrapper" :class="{ 'files-wrapper--new': data.isNew == true }">
         <!-- <div class="files-wrapper__warning" v-if="data.isAnonymous && header">
             NOT VERIFIED USER
         </div> -->
+
+        <div class="files-wrapper__new" v-if="data.isNew == true">
+            NEW
+        </div>
 
         <header class="files-wrapper__header" v-if="header">
 
@@ -86,6 +90,29 @@
 
 
         position: relative;
+        z-index: 2;
+        
+        &--new {
+            z-index: 1001;
+
+            &::before {
+                content: "";
+
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+
+                border: .2rem dotted white;
+                border-radius: 1.5rem;
+
+                width: calc(100% + 2rem);
+                height: calc(100% + 2rem);
+
+                pointer-events: none;
+
+                z-index: 1;
+            }
+        }
 
         &__header {
             display: flex;
@@ -129,7 +156,24 @@
             position: absolute;
             top: -2rem;
             left: -1rem;
+        }
 
+        &__new {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #379710;
+
+            border: 1px solid #44df72;
+            background: #7dff77;
+            border-radius: 0.3rem;
+            
+            padding: .4rem 1.2rem;
+
+            position: absolute;
+            top: -2rem;
+            right: -1rem;
+
+            z-index: 2;
         }
 
         &__list {

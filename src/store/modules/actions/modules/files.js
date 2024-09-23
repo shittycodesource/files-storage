@@ -1,6 +1,6 @@
 import { db, storage } from '@/firebase';
 import { getDownloadURL, uploadBytes, ref as imageRef } from 'firebase/storage';
-import { setDoc, updateDoc, doc as documentRef, getDoc, getDocs, collection, Timestamp, limitToLast, deleteDoc, arrayUnion, increment, where, arrayRemove, query, orderBy, startAfter, limit, getCountFromServer, serverTimestamp } from 'firebase/firestore';
+import { setDoc, updateDoc, doc as documentRef, getDoc, getDocs, collection, Timestamp, onSnapshot, limitToLast, deleteDoc, arrayUnion, increment, where, arrayRemove, query, orderBy, startAfter, limit, getCountFromServer, serverTimestamp } from 'firebase/firestore';
 
 import uploadFiles from "@/utils/uploadFiles";
 import generateRandomID from "@/utils/generateRandomID";
@@ -21,20 +21,28 @@ export default {
         Fetch documents
         I think that's obvious
     */
-    async fetchFiles() {
+    async fetchFiles({commit, getters}) {
         try {
+            const unsub = onSnapshot(query(collection(db, 'files'), orderBy('createdAt', 'asc')), (snapshot) => {
 
-            const q = query(collection(db, 'files'), orderBy('createdAt', 'asc'));
-            const snapshots = await getDocs(q);
-            const docs = [];
+                for (let i = 0; i <= snapshot.docChanges().length - 1; i++) {
+                    const change = snapshot.docChanges()[i];
+                    const doc = change.doc.data();
 
-            snapshots.forEach(item => {
-                if (item.exists()) {
-                    docs.unshift(item.data());
+                    if (change.type === "added") {
+
+                        if (doc.createdAt) {
+                            if (getters.isInitDone) {
+                                doc.isNew = true;
+                            }
+
+                            commit("PUSH_FILES", doc);
+                        }
+                    }
                 }
-            });
 
-            return docs;
+                commit('INIT_FETCH');
+            })
         } catch (error) {
             console.log('[fetchFiles() Error]');
             throw error;
@@ -67,11 +75,19 @@ export default {
             };
 
             await setDoc(documentRef(db, 'files', id), data);
-            await updateDoc(documentRef(db, 'space', 'used'), { size: increment(sizes) });
+            await setDoc(documentRef(db, 'space', 'used'), { size: increment(sizes) }, { merge: true });
         } catch (error) {
             console.log('[sendFiles() Error]');
             throw error;
         }
+    },
+
+    openFileOverlay({commit}) {
+        commit('OPEN_FILE_OVERLAY');
+    },
+
+    hideFileOverlay({commit}) {
+        commit('HIDE_FILE_OVERLAY');
     }
 
 
